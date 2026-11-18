@@ -1,0 +1,19 @@
+; Projeto Godot que carrega masmorras geradas pelo Python (integração opção A).
+
+config_version=5
+
+[application]
+
+config/name="Gerador de Masmorras"
+config/description="Carrega e desenha masmorras exportadas em JSON pelo gerador em Python (BSP e Digger)."
+run/main_scene="res://cenas/masmorra.tscn"
+config/features=PackedStringArray("4.7")
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
