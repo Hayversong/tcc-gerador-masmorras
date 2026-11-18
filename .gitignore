@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+
+# Saídas regeneráveis pelos scripts
+figuras/
+
+# Godot (cache de importação)
+godot/.godot/
+
+# Arquivos locais
+docs/
+package-lock.json
+node_modules/
+
+# Editores e sistema
+.vscode/
+.idea/
+*.swp
+.DS_Store
+.~lock.*

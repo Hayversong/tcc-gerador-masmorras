@@ -1,0 +1,9 @@
+[project]
+name = "gerador-masmorras"
+version = "0.1.0"
+description = "Geração procedural de masmorras 2D em grade (BSP e Digger) para comparação experimental"
+requires-python = ">=3.10"
+dependencies = []
+
+[tool.setuptools]
+packages = ["masmorras"]
