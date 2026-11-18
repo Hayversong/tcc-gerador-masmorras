@@ -1,0 +1,20 @@
+data: 2026-11-13T16:11:40 | python: 3.14.10 | sistema: Linux-7.3.3-200.fc44.x86_64-x86_64-with-glibc2.43 | cpu: 12th Gen Intel(R) Core(TM) i5-12450H | nucleos_logicos: 12 | sementes: 1000 | aquecimento: 20
+   bsp 40x30: 1000 mapas em 3.7 s
+digger 40x30: 1000 mapas em 2.5 s
+   bsp 80x45: 1000 mapas em 23.1 s
+digger 80x45: 1000 mapas em 8.0 s
+   bsp 160x90: 1000 mapas em 359.7 s
+digger 160x90: 1000 mapas em 63.0 s
+resultados em resultados/metricas.csv
+gerados: resultados/resumo.csv resultados/resumo.md
+ilustrações:
+   fig01_representacao_grade
+   fig02_bsp_particoes_arvore
+   fig03_bsp_etapas
+   fig04_digger_etapas
+   fig05_exemplos_mapas
+resultados:
+   fig06_tempo
+   fig07_conectividade
+   fig08_estrutura
+FIM
