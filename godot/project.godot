@@ -5,7 +5,7 @@ config_version=5
 [application]
 
 config/name="Gerador de Masmorras"
-config/description="Carrega e desenha masmorras exportadas em JSON pelo gerador em Python (BSP e Digger)."
+config/description="Gera (pelo Python), desenha e permite explorar masmorras BSP e Digger."
 run/main_scene="res://cenas/masmorra.tscn"
 config/features=PackedStringArray("4.7")
 
@@ -17,3 +17,4 @@ window/size/viewport_height=720
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+environment/defaults/default_clear_color=Color(0.1686, 0.1686, 0.2, 1)
