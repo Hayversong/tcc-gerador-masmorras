@@ -134,6 +134,16 @@ def _ligar(no: No, grade: Grade, rng: random.Random) -> None:
 def gerar_bsp(largura: int, altura: int, semente: int, parametros: ParametrosBSP | None = None) -> Grade:
     """Gera uma masmorra pelo BSP clássico. Mesma semente produz o mesmo mapa."""
     p = parametros or ParametrosBSP()
+    espaco_sala = p.sala_minima + 2 * p.margem
+    if p.folha_minima < espaco_sala:
+        raise ValueError(
+            f"folha_minima ({p.folha_minima}) precisa ser pelo menos sala_minima + 2 x margem ({espaco_sala})"
+        )
+    if largura - 2 < espaco_sala or altura - 2 < espaco_sala:
+        raise ValueError(
+            f"grade {largura}x{altura} pequena demais: o interior precisa de pelo menos "
+            f"{espaco_sala}x{espaco_sala} células para uma sala"
+        )
     rng = random.Random(semente)
     grade = Grade(largura, altura)
 

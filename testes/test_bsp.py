@@ -21,6 +21,13 @@ class TestBSP(unittest.TestCase):
                     self.assertEqual(m["totalmente_conectado"], 1)
                     self.assertEqual(m["pares_salas_sobrepostas"], 0)
 
+    def test_parametros_incompativeis_dao_erro_claro(self):
+        from masmorras.bsp import ParametrosBSP
+        with self.assertRaisesRegex(ValueError, "folha_minima"):
+            gerar_bsp(40, 30, 0, ParametrosBSP(folha_minima=4))
+        with self.assertRaisesRegex(ValueError, "pequena demais"):
+            gerar_bsp(5, 5, 0)
+
     def test_borda_e_parede(self):
         g = gerar_bsp(40, 30, 1)
         linhas = g.linhas()
