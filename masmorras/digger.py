@@ -70,7 +70,10 @@ def gerar_digger(
 
         # ao encontrar a borda, o agente sorteia outra direção válida
         if not grade.interior(x + direcao[0], y + direcao[1]):
-            direcao = rng.choice(_direcoes_validas(grade, x, y))
+            validas = _direcoes_validas(grade, x, y)
+            if not validas:  # grade sem espaço para andar (ex.: 3 x 3)
+                break
+            direcao = rng.choice(validas)
 
         # escava um passo na direção atual
         x, y = x + direcao[0], y + direcao[1]

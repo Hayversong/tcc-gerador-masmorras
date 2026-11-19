@@ -25,6 +25,11 @@ class TestDigger(unittest.TestCase):
                     self.assertGreaterEqual(g.total_piso(), int(0.35 * largura * altura))
                     self.assertEqual(calcular(g)["totalmente_conectado"], 1)
 
+    def test_grade_minima_nao_quebra(self):
+        g, r = gerar_digger(3, 3, 0)
+        self.assertTrue(g.eh_piso(1, 1))
+        self.assertFalse(r.atingiu_cobertura)
+
     def test_teto_de_passos(self):
         p = ParametrosDigger(cobertura_alvo=0.99, fator_teto_passos=1)
         g, r = gerar_digger(40, 30, 0, p)
