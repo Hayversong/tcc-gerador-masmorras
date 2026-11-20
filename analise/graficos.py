@@ -6,6 +6,7 @@ Ilustrações (não dependem do experimento):
   fig03_bsp_etapas            partições -> salas -> corredores
   fig04_digger_etapas         digger com 10%, 20% e 35% de piso
   fig05_exemplos_mapas        BSP e Digger nos três tamanhos de grade
+  fig12_visao_geral           módulos da solução e fluxo de dados
 
 Resultados (lêem resultados/metricas.csv):
   fig06_tempo                 tempo de geração por tamanho de grade
@@ -27,7 +28,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 from matplotlib.colors import ListedColormap  # noqa: E402
-from matplotlib.patches import Patch, Rectangle  # noqa: E402
+from matplotlib.patches import FancyArrowPatch, FancyBboxPatch, Patch, Rectangle  # noqa: E402
 from matplotlib.ticker import FuncFormatter  # noqa: E402
 
 from masmorras.bsp import No, ParametrosBSP, _dividir, gerar_bsp  # noqa: E402
@@ -281,6 +282,64 @@ def legenda_algoritmos(fig) -> None:
                loc="upper center", ncol=2, frameon=False, bbox_to_anchor=(0.5, 1.04))
 
 
+
+def fig12_visao_geral() -> None:
+    """Diagrama dos módulos da solução: geração, experimento e aplicação na Godot."""
+    fig, ax = plt.subplots(figsize=(7.2, 3.9))
+    ax.set_xlim(0, 100)
+    ax.set_ylim(0, 56)
+    ax.axis("off")
+
+    def caixa(x, y, w, h, titulo, detalhe, cor="#f4f4f4", borda=GRADE_EIXO):
+        ax.add_patch(FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0.4,rounding_size=1.2",
+                                    facecolor=cor, edgecolor=borda, linewidth=1))
+        ax.text(x + w / 2, y + h * 0.66, titulo, ha="center", va="center",
+                fontsize=8.2, fontweight="bold", color=TINTA)
+        ax.text(x + w / 2, y + h * 0.28, detalhe, ha="center", va="center",
+                fontsize=6.8, color=TINTA_2)
+
+    def seta(x1, y1, x2, y2, rotulo=None, lado="direita"):
+        ax.add_patch(FancyArrowPatch((x1, y1), (x2, y2), arrowstyle="-|>", mutation_scale=9,
+                                     color=TINTA_2, linewidth=0.9))
+        if rotulo:
+            dx = 1.2 if lado == "direita" else -1.2
+            ax.text((x1 + x2) / 2 + dx, (y1 + y2) / 2, rotulo, va="center",
+                    ha="left" if lado == "direita" else "right",
+                    fontsize=6.5, color=TINTA_2, style="italic")
+
+    def faixa(y, h, texto):
+        ax.add_patch(Rectangle((0, y), 100, h, facecolor="none", edgecolor=GRADE_EIXO,
+                               linewidth=0.8, linestyle=(0, (4, 3))))
+        ax.text(1.2, y + h - 1.2, texto, ha="left", va="top", fontsize=7, color=TINTA_2,
+                fontweight="bold")
+
+    faixa(19, 37, "Python: geração e experimento")
+    faixa(0, 17, "Godot Engine: aplicação")
+
+    azul, laranja = "#e3eefb", "#fde9df"
+    caixa(3, 41, 15, 8, "BSP", "bsp.py", azul, COR["bsp"])
+    caixa(3, 25, 15, 8, "Digger", "digger.py", laranja, COR["digger"])
+    caixa(24, 33, 15, 8, "Grade", "grade.py")
+    caixa(46, 41, 16, 8, "Métricas", "metricas.py")
+    caixa(68, 41, 14, 8, "Experimento", "executar.py")
+    caixa(86, 41, 12, 8, "Análise", "analisar.py")
+    caixa(68, 24, 30, 8, "Dados e figuras", "metricas.csv, resumo.csv, graficos.py")
+    caixa(46, 24, 16, 8, "Exportação", "gerar_mapa.py")
+    caixa(40, 3, 26, 9, "Carregador", "carregador_masmorra.gd")
+    caixa(72, 3, 26, 9, "Mapa de tiles", "TileMapLayer, painel, personagem")
+
+    seta(18.6, 45, 23.6, 39)
+    seta(18.6, 29, 23.6, 35)
+    seta(39.6, 38, 45.6, 44)
+    seta(39.6, 36, 45.6, 29)
+    seta(62.6, 45, 67.6, 45)
+    seta(82.6, 45, 85.6, 45)
+    seta(92, 40.6, 92, 32.6, "6.000 mapas", lado="esquerda")
+    seta(50, 12.6, 50, 23.6, "OS.execute", lado="esquerda")
+    seta(58, 23.6, 58, 12.6, "JSON")
+    seta(66.6, 7.5, 71.6, 7.5)
+    salvar(fig, "fig12_visao_geral")
+
 def fig06_tempo(dados) -> None:
     fig, ax = plt.subplots(figsize=(4.2, 2.6))
     celulas = [w * h for w, h in GRADES]
@@ -344,6 +403,7 @@ def main() -> None:
     fig03_bsp_etapas()
     fig04_digger_etapas()
     fig05_exemplos_mapas()
+    fig12_visao_geral()
     if RESULTADOS.exists():
         print("resultados:")
         dados = carregar_resultados()
